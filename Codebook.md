@@ -68,7 +68,7 @@ The are 88 variables within the final data set, extracted from the original 561.
  "STANDING": subject was standing  <br>
  "LAYING": subject was laying  <p>
  
- The following variabes are the mean and the standard deviation values for each measurement taken: <br>
+ The following variables are the mean and the standard deviation values for each measurement taken: <br>
  
  [3] "TimeBodyAccelerometerMeanX"                              
  [4] "TimeBodyAccelerometerMeanY"                              
