@@ -33,7 +33,7 @@ merged_data <- cbind(subject_merge, y_merge, x_merge) <br>
  
 ### 3: Uses descriptive activty names to name the activities in the dataset ###
  
-Numbers in class column of tidy_data were replaced with the respective activity namestaken from second column of the activity_classes variable by subsetting the data.
+Numbers in class column of tidy_data were replaced with the respective activity names taken from second column of the activity_classes variable by subsetting the data.
               
 ### 4: Appropriately labelling the data set with descriptive variable names ###
 
