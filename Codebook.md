@@ -1,21 +1,74 @@
-This is my code book.
+# Codebook #
 
+## Data ##
+
+The data was downloaded from the  **[UCI HAR Dataset](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)**
+
+## Transformations ##
+
+### 1: Merging train and test data sets ###
+
+The data was from each file was read using read.table(), and was stored in the following variables. <p> 
+
+features <- features.txt   <br>
+activity_classes <- activity_labels.txt  <br>
+subject_test <- test/subject_test.txt   <br>
+x_test_data <- test/X_test.txt   <br>
+y_test_class <- test/y_test.txt <br>
+subject_train <- test/subject_train.txt  <br>
+x_train_data <- test/X_train.txt  <br>
+y_train_class <- test/y_train.txt   <br>
+
+
+The training and the test were merged to create the "tidy_data" dataset: <p>
+ 
+x_merge <- rbind(x_train_data, x_test_data) <br>
+y_merge <- rbind(y_train_class, y_test_class) <br>
+subject_merge <- rbind(subject_train, subject_test) <br>
+merged_data <- cbind(subject_merge, y_merge, x_merge) <br>
+
+### 2: Extracts only the measurment on the mean and the standard deviation for each measurement ###
+ 
+ The "tidy_data" dataset is created by using the select function from dplyr, selecting the subject and the class variables, and the variables containing the mean and the std values. 
+ 
+### 3: Uses descriptive activty names to name the activities in the dataset ###
+ 
+Numbers in class column of tidy_data were replaced with the respective activity namestaken from second column of the activity_classes variable by subsetting the data.
+              
+### 4: Appropriately labelling the data set with descriptive variable names ###
+
+Using the gsub() function, the following characters within the variable names were changed from  <br>
+
+"^t", "^f", "Acc", "gravity", "jerk", "Gyro", "Mag", "mean",  
+"std", "angle.t", "angle" "BodyBody", "class"  <br>
+
+to  <br>
+
+"Time", "Frequency" "Accelerometer", "Gravity", 
+"jerk", "Jerk" "Gyroscope" "Magnitude" "Mean" "StandardDeviation", "AngleTime", "Angle", "Body", "Activity"  <br>
+ 
+respectively. Punctuation was also removed. 
+
+### 5: Create a second, independent dataset with the avergae of each variable for each activity and subject ###
+ 
+The "final_data" dataset was created using the melt and dcast funtions from the reshape2 package, the data was grouped into subject and activity, and the mean for each variable was found.
+ 
 ## Variable List ##
 
-The are 88 variables within the final data set, extracted from the original 561. These are as follows:
+The are 88 variables within the final data set, extracted from the original 561. These are as follows: <br>
 
  [1] "Subject" : This ranges from 1 to 30, as there were 30 participants in the investigation.   
  
- [2] "Activity": The values for this is limited to:
+ [2] "Activity": The values for this is limited to:  <br>
  
- "WALKING": subject was walking
- "WALKING_UPSTAIRS": subject was walking upstairs
- "WALKING_DOWNSTAIRS": subject was walking downstairs
- "SITTING": subject was sitting
- "STANDING": subject was standing
- "LAYING": subject was laying
+ "WALKING": subject was walking  <br>
+ "WALKING_UPSTAIRS": subject was walking upstairs  <br>
+ "WALKING_DOWNSTAIRS": subject was walking downstairs  <br>
+ "SITTING": subject was sitting  <br>
+ "STANDING": subject was standing  <br>
+ "LAYING": subject was laying  <p>
  
- The following variabes are the mean and the standard deviation values for each measurement taken:
+ The following variabes are the mean and the standard deviation values for each measurement taken: <br>
  
  [3] "TimeBodyAccelerometerMeanX"                              
  [4] "TimeBodyAccelerometerMeanY"                              
@@ -103,45 +156,6 @@ The are 88 variables within the final data set, extracted from the original 561.
 [86] "FrequencyBodyAccelerometerJerkMagnitudeStandardDeviation"
 [87] "FrequencyBodyGyroscopeMagnitudeStandardDeviation"        
 [88] "FrequencyBodyGyroscopeJerkMagnitudeStandardDeviation"  
-
-
-## Transformations ##
-
-# 1: Merging train and test data sets
-
-The data was from each file was read using read.table(), and was stored in the following variables. <p> 
-
-features <- features.txt : 561 rows, 2 columns. The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. <br>
-activities <- activity_labels.txt : 6 rows, 2 columns. List of activities performed when the corresponding measurements were taken and its codes (labels)<br>
-subject_test <- test/subject_test.txt : 2947 rows, 1 column. Contains test data of 9/30 volunteer test subjects being observed. <br>
-x_test <- test/X_test.txt : 2947 rows, 561 columns. Contains recorded features test data. <br>
-y_test <- test/y_test.txt : 2947 rows, 1 columns. Contains test data of activities’code labels.<br>
-subject_train <- test/subject_train.txt : 7352 rows, 1 column. Contains train data of 21/30 volunteer subjects being observed. <br>
-x_train <- test/X_train.txt : 7352 rows, 561 columns. Contains recorded features train data. <br>
-y_train <- test/y_train.txt : 7352 rows, 1 columns. Contains train data of activities’code labels. <br>
-
-
-Merges the training and the test sets to create one data set
-X (10299 rows, 561 columns) is created by merging x_train and x_test using rbind() function
-Y (10299 rows, 1 column) is created by merging y_train and y_test using rbind() function
-Subject (10299 rows, 1 column) is created by merging subject_train and subject_test using rbind() function
-Merged_Data (10299 rows, 563 column) is created by merging Subject, Y and X using cbind() function
-
-# 4: Appropriately labelling the data set with descriptive variable names #
-
-Using the gsub() function, the following characters within the variable names were changed from
-
-"^t", "^f", "Acc", "gravity", "jerk", "Gyro", "Mag", "mean",
-"std", "angle.t", "angle" "BodyBody"
-
-to
-
-"Time", "Frequency" "Accelerometer", "Gravity", 
-"jerk", "Jerk" "Gyroscope" "Magnitude" "Mean" "StandardDeviation", "AngleTime", "Angle", "Body"
- 
-respectively. Punctuation was also removed. 
-
-
 
 
 
